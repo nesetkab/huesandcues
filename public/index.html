@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hues and Cues</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Join Screen -->
+    <div id="join-screen" class="screen active">
+      <div class="container">
+        <h1>Hues and Cues</h1>
+        <p class="subtitle">The color guessing game</p>
+        <div class="join-form">
+          <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+          <button id="join-btn">Join Game</button>
+        </div>
+        <p class="waiting-text" id="waiting-text"></p>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+      <header>
+        <div class="header-left">
+          <h2>Hues and Cues</h2>
+          <span id="round-display">Round 1</span>
+        </div>
+        <div class="header-right">
+          <div class="players-info">
+            <div class="player" id="player1-info">
+              <span class="player-name">Player 1</span>
+              <span class="player-score">0</span>
+            </div>
+            <div class="player" id="player2-info">
+              <span class="player-name">Player 2</span>
+              <span class="player-score">0</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div id="game-status" class="game-status">
+          Waiting for players...
+        </div>
+
+        <div id="target-display" class="target-display hidden">
+          <div class="target-color-box" id="target-color-box"></div>
+          <p>This is your target color! Give a verbal hint to your partner.</p>
+          <button id="cue-given-btn" class="cue-btn">I've Given My Hint</button>
+        </div>
+
+        <div id="results-panel" class="results-panel hidden">
+          <div class="results-content">
+            <div class="result-colors">
+              <div class="result-color-item">
+                <div class="result-color" id="result-target"></div>
+                <p>Target</p>
+              </div>
+              <div class="result-color-item">
+                <div class="result-color" id="result-guess"></div>
+                <p>Guess</p>
+              </div>
+            </div>
+            <p id="result-score" class="result-score"></p>
+            <button id="next-round-btn">Next Round</button>
+          </div>
+        </div>
+
+        <div id="color-grid" class="color-grid"></div>
+
+        <div id="guess-marker" class="guess-marker hidden"></div>
+        <div id="target-marker" class="target-marker hidden"></div>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
