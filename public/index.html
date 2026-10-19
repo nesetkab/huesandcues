@@ -3,81 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
   <title>Hues and Cues</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Crect width='2' height='2' fill='%23e8564a'/%3E%3Crect x='2' width='2' height='2' fill='%23e9b93f'/%3E%3Crect y='2' width='2' height='2' fill='%233f9e7a'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%234a74d9'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app">
-    <!-- Join Screen -->
-    <div id="join-screen" class="screen active">
-      <div class="container">
-        <h1>Hues and Cues</h1>
-        <p class="subtitle">The color guessing game</p>
-        <div class="join-form">
-          <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
-          <button id="join-btn">Join Game</button>
+  <section id="join" class="join" hidden>
+    <div class="join-inner">
+      <p class="eyebrow">A color guessing game</p>
+      <h1 class="wordmark">Hues<span>&amp;</span>Cues</h1>
+      <div class="spectrum" aria-hidden="true"></div>
+      <form id="join-form" class="join-form">
+        <label class="eyebrow" for="name">Your name</label>
+        <div class="join-row">
+          <input id="name" name="name" maxlength="20" autocomplete="nickname" placeholder="Name" required>
+          <button class="btn btn-primary" type="submit">Join</button>
         </div>
-        <p class="waiting-text" id="waiting-text"></p>
+      </form>
+      <p id="join-note" class="note"></p>
+    </div>
+  </section>
+
+  <section id="game" class="game" hidden>
+    <header class="topbar">
+      <div class="brand">Hues<span>&amp;</span>Cues</div>
+      <div id="round" class="mono muted"></div>
+      <div class="topbar-right">
+        <span id="conn" class="conn" hidden>Reconnecting</span>
+        <button id="leave" class="link" type="button">Leave</button>
       </div>
-    </div>
+    </header>
 
-    <!-- Game Screen -->
-    <div id="game-screen" class="screen">
-      <header>
-        <div class="header-left">
-          <h2>Hues and Cues</h2>
-          <span id="round-display">Round 1</span>
+    <main class="layout">
+      <section class="panel action-panel">
+        <div id="stage"></div>
+        <div id="cues" class="cues"></div>
+        <div id="controls"></div>
+        <p id="problem" class="problem" role="alert"></p>
+      </section>
+
+      <section class="board-area">
+        <div class="board-scroll">
+          <div id="board" class="board" role="grid" aria-label="Color board"></div>
         </div>
-        <div class="header-right">
-          <div class="players-info">
-            <div class="player" id="player1-info">
-              <span class="player-name">Player 1</span>
-              <span class="player-score">0</span>
-            </div>
-            <div class="player" id="player2-info">
-              <span class="player-name">Player 2</span>
-              <span class="player-score">0</span>
-            </div>
-          </div>
+        <div class="board-foot mono muted">
+          <span id="hover-coord">&nbsp;</span>
+          <span class="legend"><i class="cone cone-0"></i>1st guess <i class="cone cone-1"></i>2nd guess</span>
         </div>
-      </header>
+      </section>
 
-      <main>
-        <div id="game-status" class="game-status">
-          Waiting for players...
-        </div>
-
-        <div id="target-display" class="target-display hidden">
-          <div class="target-color-box" id="target-color-box"></div>
-          <p>This is your target color! Give a verbal hint to your partner.</p>
-          <button id="cue-given-btn" class="cue-btn">I've Given My Hint</button>
-        </div>
-
-        <div id="results-panel" class="results-panel hidden">
-          <div class="results-content">
-            <div class="result-colors">
-              <div class="result-color-item">
-                <div class="result-color" id="result-target"></div>
-                <p>Target</p>
-              </div>
-              <div class="result-color-item">
-                <div class="result-color" id="result-guess"></div>
-                <p>Guess</p>
-              </div>
-            </div>
-            <p id="result-score" class="result-score"></p>
-            <button id="next-round-btn">Next Round</button>
-          </div>
-        </div>
-
-        <div id="color-grid" class="color-grid"></div>
-
-        <div id="guess-marker" class="guess-marker hidden"></div>
-        <div id="target-marker" class="target-marker hidden"></div>
-      </main>
-
-    </div>
-  </div>
+      <section class="panel score-panel">
+        <p class="eyebrow">Players</p>
+        <ol id="scores" class="scores"></ol>
+      </section>
+    </main>
+  </section>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="game.js"></script>
